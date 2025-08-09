@@ -99,7 +99,7 @@ bash
 Copy
 Edit
 # Clone repo
-git clone https://github.com/your-org/deadlight-edge.git
+git clone https://github.com/gnarzilla/deadlight-edge.git
 cd deadlight-edge
 
 # Install dependencies
