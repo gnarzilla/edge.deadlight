@@ -52,8 +52,6 @@ Unified deployment artifacts – one build, one push.
 
 ## 3. Architecture
 ```css
-Copy
-Edit
 [ Client ] 
    │
 [ Cloudflare Worker Layer ]
