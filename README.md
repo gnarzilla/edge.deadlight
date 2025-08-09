@@ -51,8 +51,7 @@ Shared secrets + ACLs across layers.
 Unified deployment artifacts – one build, one push.
 
 ## 3. Architecture
-```
-css
+```css
 Copy
 Edit
 [ Client ] 
