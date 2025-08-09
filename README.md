@@ -1,7 +1,7 @@
-Deadlight Edge Platform — Modular, Secure Web + Network Infrastructure
+# Deadlight Edge Platform — Modular, Secure Web + Network Infrastructure
 A production-ready, security-hardened edge platform that combines a modular static/dynamic site framework with integrated multi-protocol proxy server management. Built for performance, privacy, and scalability using Cloudflare Workers and lightweight containerized services.
 
-1. Overview
+## 1. Overview
 Deadlight Edge Platform is an edge-native application framework that merges:
 
 Blog / CMS Layer – A static-first, markdown-driven content engine with optional dynamic features, deployed at the edge for minimal latency.
@@ -14,8 +14,8 @@ Security by Default – Strong isolation between content, application logic, and
 
 The goal: A single, self-hostable stack for high-performance publishing and secure, private network access.
 
-2. Core Features
-2.1 Web Layer (Blog / CMS)
+## 2. Core Features
+### 2.1 Web Layer (Blog / CMS)
 Edge-deployed on Cloudflare Workers for global low-latency delivery.
 
 Markdown content system with automatic build/deploy.
@@ -28,7 +28,7 @@ Optional dynamic endpoints for interactive features.
 
 Security hardening – CSP, sanitization, and Worker-level request filtering.
 
-2.2 Proxy Management Layer
+### 2.2 Proxy Management Layer
 Multi-protocol support (HTTP(S), SOCKS5, WebSocket tunneling).
 
 Dynamic routing rules – per-path, per-origin, or session-based.
@@ -41,7 +41,7 @@ Logging + monitoring hooks for external observability tools.
 
 Containerized workers for isolated network services.
 
-2.3 Integration Points
+### 2.3 Integration Points
 Single control interface for content + proxy settings.
 
 Per-route content/proxy blending – e.g., public content + private backend API through the same domain.
@@ -50,7 +50,7 @@ Shared secrets + ACLs across layers.
 
 Unified deployment artifacts – one build, one push.
 
-3. Architecture
+## 3. Architecture
 css
 Copy
 Edit
@@ -75,7 +75,7 @@ Containerized Proxy Nodes – Run on your infrastructure or remote hosts for fle
 
 Control Plane – Configuration stored in Git/JSON/YAML, deployable via CI/CD.
 
-4. Security Model
+## 4. Security Model
 Zero-trust routing – No implicit trust between layers; all inter-service communication is authenticated.
 
 Worker sandboxing – Cloudflare’s isolation prevents lateral movement in case of compromise.
@@ -84,7 +84,7 @@ Secrets management – No secrets hardcoded in repo; stored in environment varia
 
 TLS everywhere – Proxy connections encrypted end-to-end.
 
-5. Deployment
+## 5. Deployment
 Requirements
 Node.js v18+
 
@@ -114,7 +114,8 @@ npx wrangler publish
 
 # Start proxy containers
 docker-compose up -d
-6. Roadmap
+
+##6. Roadmap
 v1.0 – Baseline integrated platform (content + proxy).
 
 v1.1 – Admin dashboard for live control.
@@ -125,5 +126,5 @@ v1.3 – Multi-region container orchestration.
 
 v2.0 – Plugin ecosystem for extending both layers.
 
-7. License
+## 7. License
 MIT License – open for personal and commercial use.
