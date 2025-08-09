@@ -51,6 +51,7 @@ Shared secrets + ACLs across layers.
 Unified deployment artifacts – one build, one push.
 
 ## 3. Architecture
+```
 css
 Copy
 Edit
@@ -69,6 +70,8 @@ Edit
    └─ Custom Protocol Handlers
        │
 [ Target Services / Origin Servers ]
+```
+
 Cloudflare Worker Layer – Handles request routing, caching, content rendering, and API endpoints.
 
 Containerized Proxy Nodes – Run on your infrastructure or remote hosts for flexible exit points.
