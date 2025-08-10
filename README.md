@@ -59,6 +59,10 @@ The goal: A single, self-hostable stack for high-performance publishing and secu
 
 ---
 
+<img width="2620" height="2107" alt="proxy-blog-site_multiview" src="https://github.com/user-attachments/assets/a6054f6e-cba6-4257-8372-e94ddefb46be" />
+
+---
+
 ## 4. Security Model
 * **Zero-trust routing:** No implicit trust between layers; all inter-service communication is authenticated.
 * **Worker sandboxing:** Cloudflare’s isolation prevents lateral movement in case of compromise.
