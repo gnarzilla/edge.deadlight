@@ -35,6 +35,7 @@ The goal: A single, self-hostable stack for high-performance publishing and secu
 
 ## 3. Architecture
 
+```
 [ Client ] 
    │
 [ Cloudflare Worker Layer ]
@@ -50,6 +51,7 @@ The goal: A single, self-hostable stack for high-performance publishing and secu
    └─ Custom Protocol Handlers
        │
 [ Target Services / Origin Servers ]
+```
 
 * **Cloudflare Worker Layer:** Handles request routing, caching, content rendering, and API endpoints.
 * **Containerized Proxy Nodes:** Run on your infrastructure or remote hosts for flexible exit points.
