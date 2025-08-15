@@ -1,6 +1,6 @@
 # Deadlight Edge Platform — Modular, Secure Web + Network Infrastructure
 
-A production-ready, security-hardened edge platform that combines a modular static/dynamic site framework with integrated multi-protocol proxy server management. Built for performance, privacy, and scalability using Cloudflare Workers and lightweight containerized services.
+A security-hardened edge platform that combines a modular static/dynamic site framework with integrated multi-protocol proxy server management. Built for performance, privacy, and scalability using Cloudflare Workers and lightweight containerized services.
 
 ---
 
