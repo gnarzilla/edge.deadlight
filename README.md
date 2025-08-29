@@ -8,13 +8,11 @@ A security-hardened edge platform that combines a modular static/dynamic site fr
 1.  [Overview](#overview)
 2.  [Features](#core-features)
 3.  [Architecture](#architecture)
-4.  [Roadmap](#roadmap)
-5.  [Getting Started](#getting-started)
-6.  [Usage](#usage)
-7.  [Extending Deadlight](#extending-deadlight)
-8.  [Project Structure](#project-structure)
-9.  [License](#license)
-10. [Support](#support) 
+4.  [Security Model](#security-model)
+5.  [Deployment](#deployment)
+6.  [Roadmap](#roadmap))
+7.  [License](#license)
+8.  [Support](#support) 
 
 ---
 
