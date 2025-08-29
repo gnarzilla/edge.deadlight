@@ -95,8 +95,8 @@ To get started quickly, follow these steps:
 
 ```bash
 # Clone the repository
-git clone [https://github.com/your-org/deadlight-edge.git](https://github.com/your-org/deadlight-edge.git)
-cd deadlight-edge
+git clone https://github.com/gnarzilla/edge.deadlight
+cd edge.deadlight
 
 # Install dependencies
 npm install
