@@ -18,7 +18,7 @@ A security-hardened edge platform that combines a modular static/dynamic site fr
 
 ---
 
-## 1. Overview
+### Overview
 The Deadlight Edge Platform is an edge-native application framework that merges:
 
 * **Blog / CMS Layer:** A static-first, markdown-driven content engine with optional dynamic features, deployed at the edge for minimal latency.
@@ -30,7 +30,7 @@ The goal: A single, self-hostable stack for high-performance publishing and secu
 
 ---
 
-## 2. Core Features
+### Core Features
 
 ### 2.1 Web Layer (Blog / CMS)
 * **Edge-deployed** on Cloudflare Workers for global low-latency delivery.
@@ -47,7 +47,7 @@ The goal: A single, self-hostable stack for high-performance publishing and secu
 
 ---
 
-## 3. Architecture
+### Architecture
 
 ```
 [ Client ] 
