@@ -99,6 +99,15 @@ npx wrangler publish
 # Start the proxy containers
 docker-compose up -d
 ```
+#### Test the integration
+
+```bash
+# From your blog's location, test if you can reach the proxy
+curl http://localhost:8080/api/blog/status
+
+# Test with API key if required
+curl -H "X-API-Key: your-key" http://localhost:8080/api/blog/status
+```
 
 ## 6. Roadmap
 v1.0 – Baseline integrated platform (content + proxy).
