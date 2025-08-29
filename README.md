@@ -10,9 +10,9 @@ A security-hardened edge platform that combines a modular static/dynamic site fr
 3.  [Architecture](#architecture)
 4.  [Security Model](#security-model)
 5.  [Deployment](#deployment)
-6.  [Roadmap](#roadmap))
+6.  [Roadmap](#roadmap)
 7.  [License](#license)
-8.  [Support](#support) 
+8.  [Documentation](#detailed-documentation) 
 
 ---
 
@@ -75,7 +75,7 @@ The goal: A single, self-hostable stack for high-performance publishing and secu
 
 ---
 
-## 4. Security Model
+### Security Model
 * **Zero-trust routing:** No implicit trust between layers; all inter-service communication is authenticated.
 * **Worker sandboxing:** Cloudflare’s isolation prevents lateral movement in case of compromise.
 * **Secrets management:** No hardcoded secrets; stored in environment variables or an encrypted vault.
@@ -83,8 +83,8 @@ The goal: A single, self-hostable stack for high-performance publishing and secu
 
 ---
 
-## 5. Deployment
-### Requirements
+### Deployment
+#### Requirements
 * Node.js v18+
 * Wrangler CLI (Cloudflare Workers)
 * Docker (for proxy containers)
@@ -121,7 +121,7 @@ curl http://localhost:8080/api/blog/status
 curl -H "X-API-Key: your-key" http://localhost:8080/api/blog/status
 ```
 
-## 6. Roadmap
+#### Roadmap
 v1.0 – Baseline integrated platform (content + proxy).
 
 v1.1 – Admin dashboard for live control.
@@ -132,10 +132,10 @@ v1.3 – Multi-region container orchestration.
 
 v2.0 – Plugin ecosystem for extending both layers.
 
-## 7. License
+#### License
 MIT License – open for personal and commercial use.
 
-## 8. Detailed Documentation
-[Deadlight Blog README](https://github.com/gnarzilla/deadlight): Detailed instructions for setting up and configuring the blog layer.
+#### Detailed Documentation
+[Deadlight Blog README](https://github.com/gnarzilla/blog.deadlight): Detailed instructions for setting up and configuring the blog layer.
 
-[Deadlight Proxy README](https://github.com/gnarzilla/deadlight): In-depth guide for building and deploying the proxy server.
+[Deadlight Proxy README](https://github.com/gnarzilla/proxy.deadlight): In-depth guide for building and deploying the proxy server.
