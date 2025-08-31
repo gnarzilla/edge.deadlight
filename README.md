@@ -106,10 +106,7 @@ cp .env.example .env
 nano .env
 
 # Deploy the Cloudflare Worker
-npx wrangler publish
-
-# Start the proxy containers
-docker-compose up -d
+wrangler deploy
 ```
 #### Test the integration
 
