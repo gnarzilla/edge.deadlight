@@ -11,9 +11,10 @@ A security-hardened edge platform that combines a modular static/dynamic site fr
 4.  [Architecture](#architecture)
 5.  [Security Model](#security-model)
 6.  [Deployment](#deployment)
-7.  [Roadmap](#roadmap)
-8.  [License](#license)
-9.  [Documentation](#detailed-documentation) 
+7.  [Monitoring & Observability](#Monitoring)
+8.  [Roadmap](#roadmap)
+9.  [License](#license)
+10.  [Documentation](#detailed-documentation) 
 
 ---
 
@@ -158,7 +159,7 @@ ingress:
 ### Production Deployment
 
 #### Recommmended Architecture
-```
+```markdown
 ┌─────────────────────────────────────────┐
 │ Cloudflare Workers │
 │ ┌─────────────┐ ┌─────────────┐ │
@@ -190,6 +191,16 @@ curl http://localhost:8080/api/blog/status
 # Test with API key if required
 curl -H "X-API-Key: your-key" http://localhost:8080/api/blog/status
 ```
+
+### Monitoring & Observability
+
+* **Cloudflare Analytics**: Built-in request metrics and error tracking
+* **Worker Logs**: Real-time logging via `wrangler tail`
+* **Proxy Metrics**: Connection stats, protocol distribution, error rates
+* **Status Endpoints**: 
+  - `/api/blog/status` - Blog service health
+  - `/api/email/status` - Email service health
+  - `/api/federation/status` - Federation service health
 
 #### Roadmap
 v1.0 – Baseline integrated platform (content + proxy).
