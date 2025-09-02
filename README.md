@@ -38,18 +38,20 @@ The goal: A single, self-hostable stack for high-performance publishing and secu
 ### Core Features
 
 ### 2.1 Web Layer (Blog / CMS)
-* **Edge-deployed** on Cloudflare Workers for global low-latency delivery.
-* **Markdown content system** with automatic build/deploy.
-* **Modular theming** via components for easy customization.
-* **Asset optimization** with CSS/JS bundling and Cloudflare caching rules.
-* **Security hardening** with CSP, sanitization, and Worker-level request filtering.
+* **Edge-deployed** on Cloudflare Workers for global low-latency delivery
+* **Markdown content system** with automatic build/deploy
+* **Federation support** via built-in email for decentralized social features
+* **Email integration** for notifications and newsletters
+* **Queue processing** for background tasks
+* **D1 database** for persistent storage at the edge
+* **KV storage** for rate limiting and caching
 
 ### 2.2 Proxy Management Layer
-* **Multi-protocol support** for HTTP(S), SOCKS5, and WebSocket tunneling.
-* **Dynamic routing rules** with runtime reconfiguration.
-* **Access controls** via token-based auth and IP restrictions.
-* **Containerized workers** for isolated network services.
-
+* **Multi-protocol support** for HTTP(S), SOCKS5, SSH, and custom protocols
+* **API-driven configuration** with real-time status monitoring
+* **Cloudflare Tunnel integration** for secure inbound connections
+* **Protocol detection** with automatic handler selection
+* **Connection pooling** and worker thread management
 ---
 
 ### Architecture
