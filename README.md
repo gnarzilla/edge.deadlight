@@ -147,6 +147,18 @@ wrangler secret put X_API_KEY --env production
 ```
 
 #### Cloudflare Tunnel Setup
+
+```bash
+# Debian/Ubuntu
+curl -L https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb -o cloudflared.deb
+sudo dpkg -i cloudflared.deb
+
+# Or via binary
+wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64
+chmod +x cloudflared-linux-amd64
+sudo mv cloudflared-linux-amd64 /usr/local/bin/cloudflared
+```
+
 ```yaml
 tunnel: your-tunnel-id
 credentials-file: ~/.cloudflared/tunnel-creds.json
