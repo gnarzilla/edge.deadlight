@@ -107,7 +107,6 @@ The goal: A single, self-hostable stack for high-performance publishing and secu
 #### Requirements
 * Node.js v18+
 * Wrangler CLI (Cloudflare Workers)
-* Docker (for proxy containers)
 * GitHub Actions (optional for CI/CD)
 
 ### Quick Start
