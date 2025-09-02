@@ -6,13 +6,14 @@ A security-hardened edge platform that combines a modular static/dynamic site fr
 
 ### Table of Contents
 1.  [Overview](#overview)
-2.  [Features](#core-features)
-3.  [Architecture](#architecture)
-4.  [Security Model](#security-model)
-5.  [Deployment](#deployment)
-6.  [Roadmap](#roadmap)
-7.  [License](#license)
-8.  [Documentation](#detailed-documentation) 
+2.  [Current Status](#current-status)
+3.  [Features](#core-features)
+4.  [Architecture](#architecture)
+5.  [Security Model](#security-model)
+6.  [Deployment](#deployment)
+7.  [Roadmap](#roadmap)
+8.  [License](#license)
+9.  [Documentation](#detailed-documentation) 
 
 ---
 
@@ -25,6 +26,12 @@ The Deadlight Edge Platform is an edge-native application framework that merges:
 * **Security by Default:** Strong isolation between content, application logic, and network-level routing.
 
 The goal: A single, self-hostable stack for high-performance publishing and secure, private network access.
+
+### Current Status
+-  **Production Ready**: Blog platform running on Cloudflare Workers
+-  **Proxy Integration**: Multi-protocol proxy server with API endpoints
+-  **Federation Support**: ActivityPub-compatible social features
+-  **In Development**: Unified admin dashboard, plugin system
 
 ---
 
