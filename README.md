@@ -163,7 +163,6 @@ cloudflared tunnel login
 
 # Create a tunnel:
 cloudflared tunnel create deaedlight-proxy
-
 ```
 
 Create config file `~/.cloudflared/config.yml`:
@@ -182,6 +181,11 @@ cloudflared tunnel route dns deadlight-proxy proxy.deadlight.boo
 
 # Run the tunnel:
 cloudflared tunnel run deadlight-proxy
+
+# Run in background with systemd (optional)
+sudo cloudflared service install
+sudo systemctl enable cloudflared
+sudo systemctl start cloudflared
 ```
 
 ### Production Deployment
