@@ -57,21 +57,31 @@ The goal: A single, self-hostable stack for high-performance publishing and secu
 ### Architecture
 
 ```
-[ Client ] 
-   │
-[ Cloudflare Worker Layer ]
-   ├─ Content Rendering (Markdown → HTML)
-   ├─ API Gateway
-   ├─ Proxy Routing Rules
-   └─ Security Filters
-       │
-[ Containerized Services / Proxy Nodes ]
-   ├─ HTTP/HTTPS Proxy
-   ├─ SOCKS5 Proxy
-   ├─ WebSocket Tunnel
-   └─ Custom Protocol Handlers
-       │
-[ Target Services / Origin Servers ]
+[ Client / Browser ]
+   │
+[ Cloudflare Edge Network ]
+   ├─ Workers (Blog/API)
+   ├─ D1 Database
+   ├─ KV Storage
+   └─ Queues
+       │
+[ Cloudflare Tunnel ]
+   │
+[ Proxy Server Layer ]
+   ├─ API Handler (/api/*)
+   ├─ Blog Integration
+   ├─ Email Service
+   └─ Federation Handler
+       │
+[ Protocol Handlers ]
+   ├─ HTTP/HTTPS
+   ├─ SOCKS4
+   ├─ SOCKS5
+   ├─ SSH
+   ├─ IMAP/S
+   ├─ SMTP
+   ├─ API
+   └─ Custom Protocols
 ```
 
 * **Cloudflare Worker Layer:** Handles request routing, caching, content rendering, and API endpoints.
@@ -116,6 +126,60 @@ nano .env
 
 # Deploy the Cloudflare Worker
 wrangler deploy
+```
+
+### Configuration
+
+#### Environment Setup
+Create `.dev.vars` for local development:
+```env
+JWT_SECRET=your-dev-secret
+X_API_KEY=your-dev-api-key
+FEDERATION_PRIVATE_KEY=your-private-key
+FEDERATION_PUBLIC_KEY=your-public-key
+```
+
+#### Production Secrets
+```bash
+wrangler secret put JWT_SECRET --env production
+wrangler secret put X_API_KEY --env production
+```
+
+#### Cloudflare Tunnel Setup
+```yaml
+tunnel: your-tunnel-id
+credentials-file: ~/.cloudflared/tunnel-creds.json
+
+ingress:
+  - hostname: proxy.yourdomain.com
+    service: http://localhost:8080
+  - service: http_status:404
+```
+### Production Deployment
+
+#### Deployment Architecture
+```
+┌─────────────────────────────────────────┐
+│ Cloudflare Workers │
+│ ┌─────────────┐ ┌─────────────┐ │
+│ │ Main Site │ │ Admin API │ │
+│ │ .domain.com│ │ /api/ │ │
+│ └─────────────┘ └─────────────┘ │
+└─────────────────────────────────────────┘
+│ │
+│ │
+┌───────────▼────────────────▼────────────┐
+│ Cloudflare Tunnel │
+│ (Secure Inbound) │
+└─────────────────────────────────────────┘
+│
+┌───────────────────▼─────────────────────┐
+│ Proxy Server │
+│ ┌─────────┐ ┌─────────┐ ┌─────────┐ │
+│ │ Blog │ │ Email │ │ Fed. │ │
+│ │ API │ │ API │ │ API │ │
+│ └─────────┘ └─────────┘ └─────────┘ │
+└─────────────────────────────────────────┘
 ```
 #### Test the integration
 
