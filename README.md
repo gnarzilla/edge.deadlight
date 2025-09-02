@@ -157,7 +157,7 @@ ingress:
 ```
 ### Production Deployment
 
-#### Deployment Architecture
+#### Recommmended Architecture
 ```
 ┌─────────────────────────────────────────┐
 │ Cloudflare Workers │
