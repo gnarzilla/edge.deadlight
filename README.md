@@ -157,8 +157,16 @@ sudo dpkg -i cloudflared.deb
 wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64
 chmod +x cloudflared-linux-amd64
 sudo mv cloudflared-linux-amd64 /usr/local/bin/cloudflared
+
+# Authenticate
+cloudflared tunnel login
+
+# Create a tunnel:
+cloudflared tunnel create deaedlight-proxy
+
 ```
 
+Create config file `~/.cloudflared/config.yml`:
 ```yaml
 tunnel: your-tunnel-id
 credentials-file: ~/.cloudflared/tunnel-creds.json
@@ -168,6 +176,14 @@ ingress:
     service: http://localhost:8080
   - service: http_status:404
 ```
+```bash
+# Route traffic to your tunnel:
+cloudflared tunnel route dns deadlight-proxy proxy.deadlight.boo
+
+# Run the tunnel:
+cloudflared tunnel run deadlight-proxy
+```
+
 ### Production Deployment
 
 #### Recommmended Architecture
