@@ -172,7 +172,7 @@ tunnel: your-tunnel-id
 credentials-file: ~/.cloudflared/tunnel-creds.json
 
 ingress:
-  - hostname: proxy.yourdomain.com
+  - hostname: proxy.your-domain.xxx
     service: http://localhost:8080
   - service: http_status:404
 ```
@@ -189,25 +189,25 @@ cloudflared tunnel run deadlight-proxy
 #### Recommmended Architecture
 ```markdown
 ┌─────────────────────────────────────────┐
-│ Cloudflare Workers │
-│ ┌─────────────┐ ┌─────────────┐ │
-│ │ Main Site │ │ Admin API │ │
-│ │ .domain.com│ │ /api/ │ │
-│ └─────────────┘ └─────────────┘ │
+│            Cloudflare Workers           │
+│     ┌─────────────┐ ┌─────────────┐     │
+│     │  Main Site  │ │  Admin API  │     │
+│     │ .domain.com │ │   /api/     │     │
+│     └─────────────┘ └─────────────┘     │
 └─────────────────────────────────────────┘
-│ │
-│ │
+                   │ │
+                   │ │
 ┌───────────▼────────────────▼────────────┐
-│ Cloudflare Tunnel │
-│ (Secure Inbound) │
+│           Cloudflare Tunnel             │
+│           (Secure Inbound)              │
 └─────────────────────────────────────────┘
-│
+                    │
 ┌───────────────────▼─────────────────────┐
-│ Proxy Server │
-│ ┌─────────┐ ┌─────────┐ ┌─────────┐ │
-│ │ Blog │ │ Email │ │ Fed. │ │
-│ │ API │ │ API │ │ API │ │
-│ └─────────┘ └─────────┘ └─────────┘ │
+│              Proxy Server               │
+│    ┌─────────┐ ┌─────────┐ ┌─────────┐  │
+│    │   Blog  │ │  Email  │ │  Fed.   │  │
+│    │   API   │ │  API    │ │  API    │  │
+│    └─────────┘ └─────────┘ └─────────┘  │
 └─────────────────────────────────────────┘
 ```
 #### Test the integration
