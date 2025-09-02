@@ -192,7 +192,8 @@ curl http://localhost:8080/api/blog/status
 curl -H "X-API-Key: your-key" http://localhost:8080/api/blog/status
 ```
 
-### Monitoring & Observability
+### Monitoring 
+#### & Observability
 
 * **Cloudflare Analytics**: Built-in request metrics and error tracking
 * **Worker Logs**: Real-time logging via `wrangler tail`
