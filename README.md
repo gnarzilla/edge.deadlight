@@ -32,7 +32,7 @@ The goal: A single, self-hostable stack for high-performance publishing and secu
 ### Current Status
 -  **Production Ready**: Blog platform running on Cloudflare Workers
 -  **Proxy Integration**: Multi-protocol proxy server with API endpoints
--  **Federation Support**: ActivityPub-compatible social features
+-  **Federation Support**: Native email-native federation for deadlight instances, compatible with ActivityPub social features
 -  **In Development**: Unified admin dashboard, plugin system
 
 ---
