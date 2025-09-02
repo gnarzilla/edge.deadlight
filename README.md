@@ -188,6 +188,9 @@ ingress:
 # From your blog's location, test if you can reach the proxy
 curl http://localhost:8080/api/blog/status
 
+# Live deployment
+curl -v https://proxy.<your-domain.xxx>/api/blog/status
+
 # Test with API key if required
 curl -H "X-API-Key: your-key" http://localhost:8080/api/blog/status
 ```
