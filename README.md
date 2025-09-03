@@ -162,7 +162,7 @@ sudo mv cloudflared-linux-amd64 /usr/local/bin/cloudflared
 cloudflared tunnel login
 
 # Create a tunnel:
-cloudflared tunnel create deaedlight-proxy
+cloudflared tunnel create deadlight-proxy
 ```
 
 Create config file `~/.cloudflared/config.yml`:
