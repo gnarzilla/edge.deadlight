@@ -171,7 +171,7 @@ tunnel: your-tunnel-id
 credentials-file: ~/.cloudflared/tunnel-creds.json
 
 ingress:
-  - hostname: proxy.your-domain.xxx
+  - hostname: proxy.your-domain.tld
     service: http://localhost:8080
   - service: http_status:404
 ```
