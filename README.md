@@ -14,7 +14,7 @@ A security-hardened edge platform that combines a modular static/dynamic site fr
 7.  [Monitoring & Observability](#Monitoring)
 8.  [Roadmap](#roadmap)
 9.  [License](#license)
-10.  [Documentation](#detailed-documentation) 
+10. [Documentation](#documentation) 
 
 ---
 
