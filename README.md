@@ -2,6 +2,7 @@
 
 A security-hardened edge platform that combines a modular static/dynamic site framework with integrated multi-protocol proxy server management. Built for performance, privacy, and scalability using Cloudflare Workers and lightweight containerized services.
 
+![Proxy-Blog Integration](https://github.com/gnarzilla/proxy.deadlight/blob/7244159ad32a7ad3383e98a874449f96597b07f0/assets/interactive_proxy_dash.gif)
 ---
 
 ### Table of Contents
@@ -28,6 +29,49 @@ The Deadlight Edge Platform is an edge-native application framework that merges:
 * **Security by Default:** Strong isolation between content, application logic, and network-level routing.
 
 The goal: A single, self-hostable stack for high-performance publishing and secure, private network access.
+
+                 DEADLIGHT ECOSYSTEM ARCHITECTURE 
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                            GLOBAL WEB LAYER                                 │
+├─────────────────────────────────────────────────────────────────────────────┤
+│   Any Browser/Device →  Cloudflare CDN →  blog.deadlight Worker             │
+│                                               (REST API Client)             │
+└─────────────────────────┬───────────────────────────────────────────────────┘
+                          │
+                          │ HTTP/JSON API Calls
+                          ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                         LOCAL PROTOCOL BRIDGE                               │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                        proxy.deadlight v1.0                                 │
+│                                                                             │
+│  ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐          │
+│  │    API          │    │   SMTP          │    │   SOCKS4/5      │          │
+│  │   Handler       │    │   Bridge        │    │   Proxy         │          │
+│  └─────────────────┘    └─────────────────┘    └─────────────────┘          │
+│                                                                             │
+│  ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐          │
+│  │    HTTP/S       │    │    IMAP/S       │    │    Protocol     │          │
+│  │   Proxy         │    │   Tunnel        │    │   Detection     │          │
+│  └─────────────────┘    └─────────────────┘    └─────────────────┘          │
+└─────────────────────────┬───────────────────────────────────────────────────┘
+                          │
+                          │ Native TCP/SSL Protocols
+                          ▼
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                          INTERNET SERVICES                                   │
+├──────────────────────────────────────────────────────────────────────────────┤
+│    SMTP Servers  │    IMAP Servers  │    Web Sites  │    Other Proxies       │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+ DEPLOYMENT MODEL:
+┌────────────────────┐                    ┌────────────────────┐
+│      GLOBAL        │                    │       LOCAL        │
+│   deadlight.boo    │ ←─── API BRIDGE ──→│   proxy.deadlight  │
+│   Cloudflare       │                    │   VPS/Pi/Desktop   │
+│   Workers/Pages    │                    │   localhost:8080   │
+└────────────────────┘                    └────────────────────┘
 
 ### Current Status
 -  **Production Ready**: Blog platform running on Cloudflare Workers
