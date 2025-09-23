@@ -22,9 +22,9 @@ A security-hardened edge platform that combines a modular static/dynamic site fr
 ### Overview
 The Deadlight Edge Platform is an edge-native application framework that merges:
 
-* **Blog / CMS Layer:** A static-first, markdown-driven content engine with optional dynamic features, deployed at the edge for minimal latency.
-* **Proxy Management Layer:** A real-time, multi-protocol proxy server controller with per-session, per-route configuration.
-* **lib.deadlight Shared Library:** A modular, edge-native library providing authentication, database models, UI components, and core utilities for the Deadlight ecosystem of applications
+* **[Blog / CMS Layer](https://github.com/gnarzilla/blog.deadlight):** A static-first, markdown-driven content engine with optional dynamic features, deployed at the edge for minimal latency.
+* **[Proxy Management Layer](https://github.com/gnarzilla/proxy.deadlight):** A real-time, multi-protocol proxy server controller with per-session, per-route configuration.
+* **[lib.deadlight Shared Library](https://github.com/gnarzilla/lib.deadlight):** A modular, edge-native library providing authentication, database models, UI components, and core utilities for the Deadlight ecosystem of applications
 * **Unified Deployment Pipeline:** CI/CD and configuration tooling optimized for Cloudflare Workers and container environments.
 * **Security by Default:** Strong isolation between content, application logic, and network-level routing.
 
