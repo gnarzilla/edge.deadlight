@@ -29,6 +29,7 @@ The Deadlight Edge Platform is an edge-native application framework that merges:
 * **Security by Default:** Strong isolation between content, application logic, and network-level routing.
 
 The goal: A single, self-hostable stack for high-performance publishing and secure, private network access.
+```text
 
                  DEADLIGHT ECOSYSTEM ARCHITECTURE 
 
@@ -72,6 +73,7 @@ The goal: A single, self-hostable stack for high-performance publishing and secu
 │   Cloudflare       │                    │   VPS/Pi/Desktop   │
 │   Workers/Pages    │                    │   localhost:8080   │
 └────────────────────┘                    └────────────────────┘
+```
 
 ### Current Status
 -  **Production Ready**: Blog platform running on Cloudflare Workers
