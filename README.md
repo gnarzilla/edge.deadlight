@@ -192,47 +192,23 @@ FEDERATION_PUBLIC_KEY=your-public-key
 wrangler secret put JWT_SECRET --env production
 wrangler secret put X_API_KEY --env production
 ```
-
-#### Cloudflare Tunnel Setup
-
-```bash
-# Debian/Ubuntu
-curl -L https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb -o cloudflared.deb
-sudo dpkg -i cloudflared.deb
-
-# Or via binary
-wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64
-chmod +x cloudflared-linux-amd64
-sudo mv cloudflared-linux-amd64 /usr/local/bin/cloudflared
-
-# Authenticate
-cloudflared tunnel login
-
-# Create a tunnel:
-cloudflared tunnel create deadlight-proxy
+#### Getting Started with Tailscale
 ```
 
-Create config file `~/.cloudflared/config.yml`:
-```yaml
-tunnel: your-tunnel-id
-credentials-file: ~/.cloudflared/tunnel-creds.json
+#### Prerequisites
 
-ingress:
-  - hostname: proxy.your-domain.tld
-    service: http://localhost:8080
-  - service: http_status:404
-```
+- Tailscale account and client installed on your devices. [Get started with Tailscale](https://tailscale.com/download).
+
+#### Configuring Tailscale
+
+1. Sign into Tailscale on your devices.
+2. Add your server running Deadlight Proxy to your Tailscale network.
+3. Configure your proxy server to accept connections over Tailscale's network interface.
+
+#### Running Deadlight with Tailscale
+
 ```bash
-# Route traffic to your tunnel:
-cloudflared tunnel route dns deadlight-proxy proxy.deadlight.boo
-
-# Run the tunnel:
-cloudflared tunnel run deadlight-proxy
-
-# Run in background with systemd (optional)
-sudo cloudflared service install
-sudo systemctl enable cloudflared
-sudo systemctl start cloudflared
+./bin/deadlight -c deadlight.conf.example
 ```
 
 ### Production Deployment
@@ -249,7 +225,7 @@ sudo systemctl start cloudflared
                    │ │
                    │ │
 ┌───────────▼────────────────▼────────────┐
-│           Cloudflare Tunnel             │
+│          Tailscale Network              │
 │           (Secure Inbound)              │
 └─────────────────────────────────────────┘
                     │
@@ -264,20 +240,21 @@ sudo systemctl start cloudflared
 #### Test the integration
 
 ```bash
-# From your blog's location, test if you can reach the proxy
-curl http://localhost:8080/api/blog/status
+# Test proxy connection
+curl http://<tailscale-ip>:8080/api/blog/status
 
 # Live deployment
 curl -v https://proxy.<your-domain.xxx>/api/blog/status
 
-# Test with API key if required
-curl -H "X-API-Key: your-key" http://localhost:8080/api/blog/status
+# With API key if required
+curl -H "X-API-Key: your-key" http://<tailscale-ip>:8080/api/blog/status
 ```
 
 ### Monitoring 
 ####   & Observability
 
 * **Cloudflare Analytics**: Built-in request metrics and error tracking
+* **Tailscale Metrics**: Monitor network connections and manage access securely.
 * **Worker Logs**: Real-time logging via `wrangler tail`
 * **Proxy Metrics**: Connection stats, protocol distribution, error rates
 * **Status Endpoints**: 
@@ -286,9 +263,9 @@ curl -H "X-API-Key: your-key" http://localhost:8080/api/blog/status
   - `/api/federation/status` - Federation service health
 
 #### Roadmap
-v1.0 – Baseline integrated platform (content + proxy).
+v1.0 – v1.0: Initial integrated platform with basic features.
 
-v1.1 – Admin dashboard for live control.
+v1.1 – Unified admin dashboard for live control.
 
 v1.2 – Built-in metrics + alerting.
 
@@ -300,8 +277,8 @@ v2.0 – Plugin ecosystem for extending both layers.
 MIT License – open for personal and commercial use.
 
 #### Detailed Documentation
-[blog.deadlight README](https://github.com/gnarzilla/blog.deadlight): Detailed instructions for setting up and configuring the blog layer.
+[Blog Layer Guide](https://github.com/gnarzilla/blog.deadlight): Installation and configuration of the blog layer.
 
-[proxy.deadlight README](https://github.com/gnarzilla/proxy.deadlight): In-depth guide for building and deploying the proxy server.
+[Proxy Layer Guide](https://github.com/gnarzilla/proxy.deadlight): Building and deploying the proxy server.
 
-[lib.deadlight README](https://github.com/gnarzilla/lib.deadlight): In-depth guide for utilizing shared deadlight resources.
+[Library Guide](https://github.com/gnarzilla/lib.deadlight): Utilizing shared resources within Deadlight.
