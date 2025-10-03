@@ -1,6 +1,6 @@
 # Deadlight Edge Platform — Modular, Secure Web + Network Infrastructure
 
-A security-hardened edge platform combining a modular static/dynamic site framework with integrated multi-protocol proxy server management. Built for performance, privacy, and scalability using Tailscale and lightweight containerized services.
+A security-hardened edge platform combining a modular static/dynamic site framework with integrated multi-protocol proxy server management. Built for performance, privacy, and scalability using Cloudflare, Tailscale and lightweight containerized services.
 
 ![Proxy-Blog Integration](https://github.com/gnarzilla/proxy.deadlight/blob/7244159ad32a7ad3383e98a874449f96597b07f0/assets/interactive_proxy_dash.gif)
 ---
