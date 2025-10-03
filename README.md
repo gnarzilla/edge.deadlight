@@ -1,6 +1,6 @@
 # Deadlight Edge Platform — Modular, Secure Web + Network Infrastructure
 
-A security-hardened edge platform that combines a modular static/dynamic site framework with integrated multi-protocol proxy server management. Built for performance, privacy, and scalability using Cloudflare Workers and lightweight containerized services.
+A security-hardened edge platform combining a modular static/dynamic site framework with integrated multi-protocol proxy server management. Built for performance, privacy, and scalability using Tailscale and lightweight containerized services.
 
 ![Proxy-Blog Integration](https://github.com/gnarzilla/proxy.deadlight/blob/7244159ad32a7ad3383e98a874449f96597b07f0/assets/interactive_proxy_dash.gif)
 ---
@@ -85,19 +85,18 @@ The goal: A single, self-hostable stack for high-performance publishing and secu
 
 ### Core Features
 
-### 2.1 Web Layer (Blog / CMS)
-* **Edge-deployed** on Cloudflare Workers for global low-latency delivery
+### Web Layer (Blog / CMS)
+* **Edge-deployed** for global low-latency delivery.
 * **Markdown content system** with automatic build/deploy
-* **Federation support** via built-in email for decentralized social features
+* **Federation support** for decentralized social features.
 * **Email integration** for notifications and newsletters
 * **Queue processing** for background tasks
 * **D1 database** for persistent storage at the edge
-* **KV storage** for rate limiting and caching
 
-### 2.2 Proxy Management Layer
+### Proxy Management Layer
 * **Multi-protocol support** for HTTP(S), SOCKS5, SSH, and custom protocols
 * **API-driven configuration** with real-time status monitoring
-* **Cloudflare Tunnel integration** for secure inbound connections
+* **Secure Mesh Networking** using Tailscale.
 * **Protocol detection** with automatic handler selection
 * **Connection pooling** and worker thread management
 ---
@@ -113,7 +112,7 @@ The goal: A single, self-hostable stack for high-performance publishing and secu
    ├─ KV Storage
    └─ Queues
        │
-[ Cloudflare Tunnel ]
+[ Talkscale Connection ]
    │
 [ Proxy Server Layer ]
    ├─ API Handler (/api/*)
@@ -129,12 +128,14 @@ The goal: A single, self-hostable stack for high-performance publishing and secu
    ├─ IMAP/S
    ├─ SMTP
    ├─ API
+   ├─ FTP
+   ├─ WebSocket
    └─ Custom Protocols
 ```
 
-* **Cloudflare Worker Layer:** Handles request routing, caching, content rendering, and API endpoints.
-* **Containerized Proxy Nodes:** Run on your infrastructure or remote hosts for flexible exit points.
-* **Control Plane:** Configuration stored in Git/JSON/YAML, deployable via CI/CD.
+* **Tailscale Network:** Provides secure mesh connectivity simplifying VPN-like gateway setups.
+* **Containerized Proxy Nodes:** Flexible deployment on your infrastructure for secure exit points.
+* **Control Plane:** Configuration via CI/CD, stored in Git/JSON/YAML.
 
 ---
 
@@ -143,10 +144,10 @@ The goal: A single, self-hostable stack for high-performance publishing and secu
 ---
 
 ### Security Model
-* **Zero-trust routing:** No implicit trust between layers; all inter-service communication is authenticated.
-* **Worker sandboxing:** Cloudflare’s isolation prevents lateral movement in case of compromise.
-* **Secrets management:** No hardcoded secrets; stored in environment variables or an encrypted vault.
-* **TLS everywhere:** All proxy connections are encrypted end-to-end.
+* **Zero-trust routing:** No implicit trust; authenticated inter-service communication.
+* **Isolation and sandboxing:** Prevents lateral movement in case of compromise.
+* **Secrets management:** Secure and encrypted storage of sensitive information.
+* **TLS everywhere:** Encrypted proxy connections end-to-end.
 
 ---
 
