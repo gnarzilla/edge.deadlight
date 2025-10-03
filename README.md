@@ -193,7 +193,6 @@ wrangler secret put JWT_SECRET --env production
 wrangler secret put X_API_KEY --env production
 ```
 #### Getting Started with Tailscale
-```
 
 #### Prerequisites
 
@@ -244,7 +243,7 @@ wrangler secret put X_API_KEY --env production
 curl http://<tailscale-ip>:8080/api/blog/status
 
 # Live deployment
-curl -v https://proxy.<your-domain.xxx>/api/blog/status
+curl -v https://proxy.<your-domain.tld>/api/blog/status
 
 # With API key if required
 curl -H "X-API-Key: your-key" http://<tailscale-ip>:8080/api/blog/status
