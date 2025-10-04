@@ -12,11 +12,12 @@ A security-hardened edge platform combining a modular static/dynamic site framew
 - [Deployment](#deployment)
 - [Configuration](#configuration)
 - [Monitoring](#Monitoring)
-- [Roadmap](#roadmap) 
+- [Roadmap](#roadmap)
+- [Detailed Documentation](detailed-documentation(
 
 ---
 
-### Overview
+## Overview
 The Deadlight Edge Platform is an edge-native application framework that merges:
 
 * **[Blog / CMS Layer](https://github.com/gnarzilla/blog.deadlight):** A static-first, markdown-driven content engine with optional dynamic features, deployed at the edge for minimal latency.
@@ -72,7 +73,7 @@ The goal: A single, self-hostable stack for high-performance publishing and secu
 └────────────────────┘                    └────────────────────┘
 ```
 
-### Current Status
+## Current Status
 -  **Production Ready**: Blog platform running on Cloudflare Workers
 -  **Proxy Integration**: Multi-protocol proxy server with API endpoints
 -  **Federation Support**: Native email-native federation for deadlight instances, compatible with ActivityPub social features
@@ -80,7 +81,7 @@ The goal: A single, self-hostable stack for high-performance publishing and secu
 
 ---
 
-### Features
+## Features
 
 ### Web Layer (Blog / CMS)
 * **Edge-deployed** for global low-latency delivery.
@@ -98,7 +99,7 @@ The goal: A single, self-hostable stack for high-performance publishing and secu
 * **Connection pooling** and worker thread management
 ---
 
-### Architecture
+## Architecture
 
 ```
 [ Client / Browser ]
@@ -140,7 +141,7 @@ The goal: A single, self-hostable stack for high-performance publishing and secu
 
 ---
 
-### Security Model
+## Security Model
 * **Zero-trust routing:** No implicit trust; authenticated inter-service communication.
 * **Isolation and sandboxing:** Prevents lateral movement in case of compromise.
 * **Secrets management:** Secure and encrypted storage of sensitive information.
@@ -148,13 +149,13 @@ The goal: A single, self-hostable stack for high-performance publishing and secu
 
 ---
 
-### Deployment
-#### Requirements
+## Deployment
+### Requirements
 * Node.js v18+
 * Wrangler CLI (Cloudflare Workers)
 * GitHub Actions (optional for CI/CD)
 
-### Quick Start
+## Quick Start
 To get started quickly, follow these steps:
 
 ```bash
@@ -173,9 +174,9 @@ nano .env
 wrangler deploy
 ```
 
-### Configuration
+## Configuration
 
-#### Environment Setup
+### Environment Setup
 Create `.dev.vars` for local development:
 ```env
 JWT_SECRET=your-dev-secret
@@ -184,32 +185,32 @@ FEDERATION_PRIVATE_KEY=your-private-key
 FEDERATION_PUBLIC_KEY=your-public-key
 ```
 
-#### Production Secrets
+### Production Secrets
 ```bash
 wrangler secret put JWT_SECRET --env production
 wrangler secret put X_API_KEY --env production
 ```
-#### Getting Started with Tailscale
+### Getting Started with Tailscale
 
-#### Prerequisites
+### Prerequisites
 
 - Tailscale account and client installed on your devices. [Get started with Tailscale](https://tailscale.com/download).
 
-#### Configuring Tailscale
+### Configuring Tailscale
 
 1. Sign into Tailscale on your devices.
 2. Add your server running Deadlight Proxy to your Tailscale network.
 3. Configure your proxy server to accept connections over Tailscale's network interface.
 
-#### Running Deadlight with Tailscale
+### Running Deadlight with Tailscale
 
 ```bash
 ./bin/deadlight -c deadlight.conf.example
 ```
 
-### Production Deployment
+## Production Deployment
 
-#### Recommmended Architecture
+### Recommmended Architecture
 ```markdown
 ┌─────────────────────────────────────────┐
 │            Cloudflare Workers           │
@@ -233,7 +234,7 @@ wrangler secret put X_API_KEY --env production
 │    └─────────┘ └─────────┘ └─────────┘  │
 └─────────────────────────────────────────┘
 ```
-#### Test the integration
+### Test the integration
 
 ```bash
 # Test proxy connection
@@ -246,7 +247,7 @@ curl -v https://proxy.<your-domain.tld>/api/blog/status
 curl -H "X-API-Key: your-key" http://<tailscale-ip>:8080/api/blog/status
 ```
 
-### Monitoring
+## Monitoring
 
 * **Cloudflare Analytics**: Built-in request metrics and error tracking
 * **Tailscale Metrics**: Monitor network connections and manage access securely.
@@ -257,7 +258,7 @@ curl -H "X-API-Key: your-key" http://<tailscale-ip>:8080/api/blog/status
   - `/api/email/status` - Email service health
   - `/api/federation/status` - Federation service health
 
-#### Roadmap
+## Roadmap
 v1.0 – v1.0: Initial integrated platform with basic features.
 
 v1.1 – Unified admin dashboard for live control.VPN Gateway.
@@ -268,10 +269,10 @@ v1.3 – Multi-region container orchestration.
 
 v2.0 – Plugin ecosystem for extending both layers.
 
-#### License
+## License
 MIT License – open for personal and commercial use.
 
-#### Detailed Documentation
+## Detailed Documentation
 [Blog Layer Guide](https://github.com/gnarzilla/blog.deadlight): Installation and configuration of the blog layer.
 
 [Proxy Layer Guide](https://github.com/gnarzilla/proxy.deadlight): Building and deploying the proxy server.
