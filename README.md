@@ -6,16 +6,14 @@ A security-hardened edge platform combining a modular static/dynamic site framew
 ---
 
 ### Table of Contents
-1.  [Overview](#overview)
-2.  [Current Status](#current-status)
-3.  [Features](#core-features)
-4.  [Architecture](#architecture)
-5.  [Security Model](#security-model)
-6.  [Deployment](#deployment)
-7.  [Monitoring & Observability](#Monitoring)
-8.  [Roadmap](#roadmap)
-9.  [License](#license)
-10. [Documentation](#documentation) 
+[Overview](#overview)
+[Current Status](#current-status)
+[Features](#core-features)
+[Architecture](#architecture)
+[Security Model](#security-model)
+[Deployment](#deployment)
+[Monitoring & Observability](#Monitoring-&-Observability)
+[Roadmap](#roadmap) 
 
 ---
 
@@ -79,7 +77,7 @@ The goal: A single, self-hostable stack for high-performance publishing and secu
 -  **Production Ready**: Blog platform running on Cloudflare Workers
 -  **Proxy Integration**: Multi-protocol proxy server with API endpoints
 -  **Federation Support**: Native email-native federation for deadlight instances, compatible with ActivityPub social features
--  **In Development**: Unified admin dashboard, plugin system
+-  **In Development**: Unified admin dashboard, plugin system, VPN gateway
 
 ---
 
@@ -249,8 +247,7 @@ curl -v https://proxy.<your-domain.tld>/api/blog/status
 curl -H "X-API-Key: your-key" http://<tailscale-ip>:8080/api/blog/status
 ```
 
-### Monitoring 
-####   & Observability
+### Monitoring & Observability
 
 * **Cloudflare Analytics**: Built-in request metrics and error tracking
 * **Tailscale Metrics**: Monitor network connections and manage access securely.
@@ -264,7 +261,7 @@ curl -H "X-API-Key: your-key" http://<tailscale-ip>:8080/api/blog/status
 #### Roadmap
 v1.0 – v1.0: Initial integrated platform with basic features.
 
-v1.1 – Unified admin dashboard for live control.
+v1.1 – Unified admin dashboard for live control.VPN Gateway.
 
 v1.2 – Built-in metrics + alerting.
 
