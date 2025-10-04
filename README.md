@@ -5,15 +5,14 @@ A security-hardened edge platform combining a modular static/dynamic site framew
 ![Proxy-Blog Integration](https://github.com/gnarzilla/proxy.deadlight/blob/7244159ad32a7ad3383e98a874449f96597b07f0/assets/interactive_proxy_dash.gif)
 ---
 
-### Table of Contents
-[Overview](#overview)
-[Current Status](#current-status)
-[Features](#core-features)
-[Architecture](#architecture)
-[Security Model](#security-model)
-[Deployment](#deployment)
-[Monitoring & Observability](#Monitoring-&-Observability)
-[Roadmap](#roadmap) 
+- [Current Status](#current-status)
+- [Features](#features)
+- [Architecture](#architecture)
+- [Security Model](#security-model)
+- [Deployment](#deployment)
+- [Configuration](#configuration)
+- [Monitoring](#Monitoring)
+- [Roadmap](#roadmap) 
 
 ---
 
@@ -81,7 +80,7 @@ The goal: A single, self-hostable stack for high-performance publishing and secu
 
 ---
 
-### Core Features
+### Features
 
 ### Web Layer (Blog / CMS)
 * **Edge-deployed** for global low-latency delivery.
@@ -247,7 +246,7 @@ curl -v https://proxy.<your-domain.tld>/api/blog/status
 curl -H "X-API-Key: your-key" http://<tailscale-ip>:8080/api/blog/status
 ```
 
-### Monitoring & Observability
+### Monitoring
 
 * **Cloudflare Analytics**: Built-in request metrics and error tracking
 * **Tailscale Metrics**: Monitor network connections and manage access securely.
