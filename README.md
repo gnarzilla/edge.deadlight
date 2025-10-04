@@ -13,7 +13,7 @@ A security-hardened edge platform combining a modular static/dynamic site framew
 - [Configuration](#configuration)
 - [Monitoring](#Monitoring)
 - [Roadmap](#roadmap)
-- [Detailed Documentation](detailed-documentation)
+- [Detailed Documentation](#detailed-documentation)
 
 ---
 
