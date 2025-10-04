@@ -253,7 +253,7 @@ curl -H "X-API-Key: your-key" http://<tailscale-ip>:8080/api/blog/status
 ## Roadmap
 v1.0 – v1.0: Initial integrated platform with basic features.
 
-v1.1 – Unified admin dashboard for live control.VPN Gateway.
+v1.1 – Unified admin dashboard for live control. VPN Gateway.
 
 v1.2 – Built-in metrics + alerting.
 
