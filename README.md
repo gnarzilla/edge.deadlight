@@ -17,9 +17,9 @@ Deadlight federates content across edge providers, bridges incompatible protocol
 | Instance | Purpose | Stack |
 |----------|---------|-------|
 | [deadlight.boo](https://deadlight.boo) | Main platform demo | Cloudflare Workers + D1 |
-| [stats.deadlight.boo](https://stats.deadlight.boo) | GitHub stats dashboard | Vercel Edge (Node.js) |
 | [thatch-dt.deadlight.boo](https://thatch-dt.deadlight.boo) | Zero-JS instance | Cloudflare Workers |
 | [meshtastic.deadlight.boo](https://meshtastic.deadlight.boo) | LoRa gateway blog | Cloudflare Workers |
+| [stats.deadlight.boo](https://stats.deadlight.boo) | GitHub stats dashboard | Vercel Edge (Node.js) |
 | [threat-level-midnight.deadlight.boo](https://threat-level-midnight.deadlight.boo) | Federation testing | Cloudflare Workers |
 
 All instances federate. All work in lynx. All survive intermittent connectivity.
