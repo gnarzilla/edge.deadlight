@@ -4,7 +4,7 @@
 
 ---
 
-## What We're Building
+## What I'm Building
 
 **A federated publishing platform that survives infrastructure collapse.**
 
