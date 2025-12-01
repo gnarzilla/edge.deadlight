@@ -1,0 +1,28 @@
+name = "deadlight-boo"
+main = "src/index.js"
+compatibility_date = "2025-07-30"
+
+[observability.logs]
+enabled = true
+
+[build]
+command = "npm install"
+
+[vars]
+SITE_URL = "https://deadlight.boo"
+ENABLE_QUEUE_PROCESSING = true  
+USE_PROXY_AUTH = false
+
+PROXY_URL = "http://127.0.0.1:8080"
+
+[assets]
+directory = "./src/assets"
+binding = "ASSETS"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "blog_content_new"
+database_id = "05792bea-8178-4509-8927-bc79bfeb8340"
+
+[triggers]
+crons = ["*/5 * * * *"]  # Every 5 minutes
