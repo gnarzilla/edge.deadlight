@@ -1,272 +1,188 @@
-# Deadlight Edge Platform — Modular, Secure Web + Network Infrastructure
-
-A security-hardened edge platform combining a modular static/dynamic site framework with integrated multi-protocol proxy server management. Built for performance, privacy, and scalability using Cloudflare, Tailscale and lightweight containerized services.
-
-![Proxy-Blog Integration](https://github.com/gnarzilla/proxy.deadlight/blob/7244159ad32a7ad3383e98a874449f96597b07f0/assets/interactive_proxy_dash.gif)
----
-
-[Current Status](#current-status) · [Features](#features) · [Architecture](#architecture) · [Security Model](#security-model) · [Deployment](#deployment) ·  [Configuration](#configuration) · [Monitoring](#Monitoring) · [Roadmap](#roadmap) · [Detailed Documentation](#detailed-documentation)
+# Deadlight Edge Platform
+#### Federated, resilient infrastructure for the internet that actually exists
+**Multi-provider edge deployment · Subdomain-based federation · Protocol-agnostic networking · Works over LoRa/Satellite/2G**
 
 ---
 
-## Overview
-The Deadlight Edge Platform is an edge-native application framework that merges:
+## What I'm Building
 
-* **[Blog / CMS Layer](https://github.com/gnarzilla/blog.deadlight):** A static-first, markdown-driven content engine with optional dynamic features, deployed at the edge for minimal latency.
-* **[Proxy Management Layer](https://github.com/gnarzilla/proxy.deadlight):** A real-time, multi-protocol proxy server controller with per-session, per-route configuration.
-* **[lib.deadlight Shared Library](https://github.com/gnarzilla/lib.deadlight):** A modular, edge-native library providing authentication, database models, UI components, and core utilities for the Deadlight ecosystem of applications
-* **Unified Deployment Pipeline:** CI/CD and configuration tooling optimized for Cloudflare Workers and container environments.
-* **Security by Default:** Strong isolation between content, application logic, and network-level routing.
+**A federated publishing platform that survives infrastructure collapse.**
 
-The goal: A single, self-hostable stack for high-performance publishing and secure, private network access.
-```text
+Not hypothetical collapse. The kind happening right now: hurricanes knocking out power grids, authoritarian internet shutdowns, ISPs priced out of rural markets, mesh networks running on solar batteries.
 
-                 DEADLIGHT ECOSYSTEM ARCHITECTURE 
+Deadlight federates content across edge providers, bridges incompatible protocols, and maintains connectivity when traditional infrastructure fails. Deploy a blog from a PinePhone over 2G. Post updates via LoRa mesh. Run a community platform with zero server costs. **User sovereignty over platform convenience.**
 
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                            GLOBAL WEB LAYER                                 │
-├─────────────────────────────────────────────────────────────────────────────┤
-│   Any Browser/Device →  Cloudflare CDN →  blog.deadlight Worker             │
-│                                               (REST API Client)             │
-└─────────────────────────┬───────────────────────────────────────────────────┘
-                          │
-                          │ HTTP/JSON API Calls
-                          ▼
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                         LOCAL PROTOCOL BRIDGE                               │
-├─────────────────────────────────────────────────────────────────────────────┤
-│                        proxy.deadlight v1.0                                 │
-│                                                                             │
-│  ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐          │
-│  │    API          │    │   SMTP          │    │   SOCKS4/5      │          │
-│  │   Handler       │    │   Bridge        │    │   Proxy         │          │
-│  └─────────────────┘    └─────────────────┘    └─────────────────┘          │
-│                                                                             │
-│  ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐          │
-│  │    HTTP/S       │    │    IMAP/S       │    │    Protocol     │          │
-│  │   Proxy         │    │   Tunnel        │    │   Detection     │          │
-│  └─────────────────┘    └─────────────────┘    └─────────────────┘          │
-└─────────────────────────┬───────────────────────────────────────────────────┘
-                          │
-                          │ Native TCP/SSL Protocols
-                          ▼
-┌──────────────────────────────────────────────────────────────────────────────┐
-│                          INTERNET SERVICES                                   │
-├──────────────────────────────────────────────────────────────────────────────┤
-│    SMTP Servers  │    IMAP Servers  │    Web Sites  │    Other Proxies       │
-└──────────────────────────────────────────────────────────────────────────────┘
+### Live Production Deployments
 
- DEPLOYMENT MODEL:
-┌────────────────────┐                    ┌────────────────────┐
-│      GLOBAL        │                    │       LOCAL        │
-│   deadlight.boo    │ ←─── API BRIDGE ──→│   proxy.deadlight  │
-│   Cloudflare       │                    │   VPS/Pi/Desktop   │
-│   Workers/Pages    │                    │   localhost:8080   │
-└────────────────────┘                    └────────────────────┘
-```
+| Instance | Purpose | Stack |
+|----------|---------|-------|
+| [deadlight.boo](https://deadlight.boo) | Main platform demo | Cloudflare Workers + D1 |
+| [thatch-dt.deadlight.boo](https://thatch-dt.deadlight.boo) | Zero-JS instance | Cloudflare Workers |
+| [meshtastic.deadlight.boo](https://meshtastic.deadlight.boo) | LoRa gateway blog | Cloudflare Workers |
+| [stats.deadlight.boo](https://stats.deadlight.boo) | GitHub stats dashboard | Vercel Edge (Node.js) |
+| [threat-level-midnight.deadlight.boo](https://threat-level-midnight.deadlight.boo) | Federation testing | Cloudflare Workers |
 
-## Current Status
--  **Production Ready**: Blog platform running on Cloudflare Workers
--  **Proxy Integration**: Multi-protocol proxy server with API endpoints
--  **Federation Support**: Native email-native federation for deadlight instances, compatible with ActivityPub social features
--  **In Development**: Unified admin dashboard, plugin system, VPN gateway
+All instances federate. All work in lynx. All survive intermittent connectivity.
 
----
-
-## Features
-
-### Web Layer (Blog / CMS)
-* **Edge-deployed** for global low-latency delivery.
-* **Markdown content system** with automatic build/deploy
-* **Federation support** for decentralized social features.
-* **Email integration** for notifications and newsletters
-* **Queue processing** for background tasks
-* **D1 database** for persistent storage at the edge
-
-### Proxy Management Layer
-* **Multi-protocol support** for HTTP(S), SOCKS5, SSH, and custom protocols
-* **API-driven configuration** with real-time status monitoring
-* **Secure Mesh Networking** using Tailscale.
-* **Protocol detection** with automatic handler selection
-* **Connection pooling** and worker thread management
 ---
 
 ## Architecture
 
+### Component Overview
+
 ```
-[ Client / Browser ]
-   │
-[ Cloudflare Edge Network ]
-   ├─ Workers (Blog/API)
-   ├─ D1 Database
-   ├─ KV Storage
-   └─ Queues
-       │
-[ Talkscale Connection ]
-   │
-[ Proxy Server Layer ]
-   ├─ API Handler (/api/*)
-   ├─ Blog Integration
-   ├─ Email Service
-   └─ Federation Handler
-       │
-[ Protocol Handlers ]
-   ├─ HTTP/HTTPS
-   ├─ SOCKS4
-   ├─ SOCKS5
-   ├─ SSH
-   ├─ IMAP/S
-   ├─ SMTP
-   ├─ API
-   ├─ FTP
-   ├─ WebSocket
-   └─ Custom Protocols
+┌─────────────────────────────────────────────────────────────┐
+│                     edge.deadlight                          │
+│                  (Orchestration & Control)                  │
+└─────────────────────────────────────────────────────────────┘
+                              │
+        ┌─────────────────────┼─────────────────────┐
+        ▼                     ▼                     ▼
+┌──────────────┐     ┌──────────────┐     ┌──────────────────┐
+│blog.deadlight│     │proxy.deadlight│     │meshtastic.       │
+│              │     │               │     │  deadlight       │
+│ Global CDN   │◄───►│Protocol Bridge│◄───►│                  │
+│ Content &    │     │SMTP/IMAP/SOCKS│     │ LoRa ↔ Internet  │
+│ Federation   │     │VPN Gateway    │     │ Gateway          │
+│              │     │               │     │                  │
+│ JavaScript   │     │ C (17 MB)     │     │ C (proxy fork)   │
+└──────────────┘     └──────────────┘     └──────────────────┘
+        │                     │                     │
+        └─────────────────────┼─────────────────────┘
+                              ▼
+                    ┌──────────────────┐
+                    │  lib.deadlight   │
+                    │                  │
+                    │ Shared libraries:│
+                    │ • Auth (JWT)     │
+                    │ • DB models      │
+                    │ • Security       │
+                    │ • UI components  │
+                    └──────────────────┘
 ```
 
-* **Tailscale Network:** Provides secure mesh connectivity simplifying VPN-like gateway setups.
-* **Containerized Proxy Nodes:** Flexible deployment on your infrastructure for secure exit points.
-* **Control Plane:** Configuration via CI/CD, stored in Git/JSON/YAML.
+### Hybrid Edge Deployment Strategy
+
+**Different providers for different strengths. No single point of failure.**
+
+| Component | Provider | Why | Resilience Factor |
+|-----------|----------|-----|-------------------|
+| **Content Delivery** | Cloudflare Workers | 300+ PoPs, D1 database, generous free tier | If CF fails, content cached at edge |
+| **Node.js Workloads** | Vercel Edge | Better Node ecosystem support | Different infrastructure from CF |
+| **WebSocket/Realtime** | Deno Deploy | Native WebSocket, TypeScript-first | Geographic diversity |
+| **Protocol Bridging** | Self-hosted/VPS | Stateful connections require persistence | Run anywhere (Pi, laptop, VPS) |
+| **Mesh Gateways** | Local nodes | Physical proximity to mesh networks | Operates without internet |
+
+### DNS Architecture
+
+```
+Cloudflare DNS (Control Plane)
+│
+├─── System Subdomains (Explicitly Routed)
+│    ├── blog.deadlight.boo → Cloudflare Workers
+│    ├── api.deadlight.boo → Vercel Functions (future)
+│    ├── stats.deadlight.boo → Vercel Edge
+│    ├── mesh.deadlight.boo → Local gateway
+│    └── proxy.deadlight.boo → Self-hosted bridge
+│
+├─── Wildcard Community Subdomains (*.deadlight.boo)
+│    ├── nyc.deadlight.boo → Tag aggregator
+│    ├── tech.deadlight.boo → Topic community
+│    ├── emergency.deadlight.boo → Disaster response
+│    └── [any].deadlight.boo → Auto-provisioned
+│
+└─── Instance Subdomains (Named Deployments)
+     ├── v1.deadlight.boo → Legacy version
+     ├── threat-level-midnight.deadlight.boo → Testing
+     └── [partner].deadlight.boo → Federated instances
+```
+
+**Key Design Choice:** User profiles at `/user/<name>` not subdomains. Avoids cert limits, works offline, simpler federation.
 
 ---
 
-<img width="2620" height="2107" alt="proxy-blog-site_multiview" src="https://github.com/user-attachments/assets/a6054f6e-cba6-4257-8372-e94ddefb46be" />
+## Federation Model
+
+### How Instances Communicate
+
+```
+Instance A                    Instance B
+blog.deadlight.boo           remote.deadlight.example
+     │                              │
+     ├── POST /federation/announce ─►
+     │   (New post notification)    │
+     │                              │
+     ◄── GET /api/posts/:id ────────┤
+     │   (Fetch full content)       │
+     │                              │
+     ├── Email Protocol Bridge ─────►
+     │   (Fallback via SMTP)        │
+```
+
+### Federation Principles
+
+1. **Protocol-agnostic**: Primary federation over HTTP, fallback to email
+2. **Pull-based**: Instances pull content they want (reduces spam)
+3. **Cryptographically signed**: All federated content includes signatures
+4. **Offline-capable**: Federation queues retry when connectivity returns
+5. **Tag-based discovery**: Instances auto-discover peers via shared tags
+
+### Community Subdomains
+
+Any subdomain not in the system reserved list becomes a **tag aggregator**:
+
+```javascript
+// Worker code (simplified)
+const subdomain = new URL(request.url).hostname.split('.')[0]
+
+if (SYSTEM_SUBDOMAINS.includes(subdomain)) {
+  return handleSystemRoute(request)
+}
+
+// Treat as tag/community
+return aggregateTagContent(subdomain, request)
+```
+
+This enables:
+- `politics.deadlight.boo` → All #politics posts across federation
+- `denver.deadlight.boo` → Geographic community
+- `emergency.deadlight.boo` → Disaster response coordination
 
 ---
 
-## Security Model
-* **Zero-trust routing:** No implicit trust; authenticated inter-service communication.
-* **Isolation and sandboxing:** Prevents lateral movement in case of compromise.
-* **Secrets management:** Secure and encrypted storage of sensitive information.
-* **TLS everywhere:** Encrypted proxy connections end-to-end.
+## Component Deep Dive
 
----
+### blog.deadlight
+**Purpose**: Content management & federation hub  
+**Stack**: Cloudflare Workers, D1, Markdown  
+**Features**:
+- Sub-10KB pages, works in lynx
+- Post via web, API, or email
+- JWT auth with role-based access
+- Federation endpoint management
 
-## Deployment
-### Requirements
-* Node.js v18+
-* Wrangler CLI (Cloudflare Workers)
-* GitHub Actions (optional for CI/CD)
+[Full docs →](https://github.com/gnarzilla/blog.deadlight)
 
-## Quick Start
-To get started quickly, follow these steps:
+### proxy.deadlight
+**Purpose**: Stateful protocol bridging  
+**Stack**: C, GLib, OpenSSL  
+**Protocols**: HTTP/S, SOCKS4/5, SMTP, IMAP, VPN (TUN)  
+**Features**:
+- 17 MB Docker image or native binary
+- Real-time dashboard on :8081
+- Tailscale-native routing
+- Zero inbound ports required
 
-```bash
-# Clone the repository
-git clone https://github.com/gnarzilla/edge.deadlight
-cd edge.deadlight
+[Full docs →](https://github.com/gnarzilla/proxy.deadlight)
 
-# Install dependencies
-npm install
+### meshtastic.deadlight
+**Purpose**: LoRa mesh ↔ Internet gateway  
+**Stack**: C (proxy.deadlight fork)  
+**Features**:
+- Bridge Meshtastic mesh to public internet
+- Post to blog via LoRa
+- Extreme low-bandwidth optimization
 
-# Configure your environment
-cp .env.example .env
-nano .env
+[Full docs →](https://github.com/gnarzilla/meshtastic.deadlight)
 
-# Deploy the Cloudflare Worker
-wrangler deploy
-```
-
-## Configuration
-
-### Environment Setup
-Create `.dev.vars` for local development:
-```env
-JWT_SECRET=your-dev-secret
-X_API_KEY=your-dev-api-key
-FEDERATION_PRIVATE_KEY=your-private-key
-FEDERATION_PUBLIC_KEY=your-public-key
-```
-
-### Production Secrets
-```bash
-wrangler secret put JWT_SECRET --env production
-wrangler secret put X_API_KEY --env production
-```
-### Getting Started with Tailscale
-
-### Prerequisites
-
-- Tailscale account and client installed on your devices. [Get started with Tailscale](https://tailscale.com/download).
-
-### Configuring Tailscale
-
-1. Sign into Tailscale on your devices.
-2. Add your server running Deadlight Proxy to your Tailscale network.
-3. Configure your proxy server to accept connections over Tailscale's network interface.
-
-### Running Deadlight with Tailscale
-
-```bash
-./bin/deadlight -c deadlight.conf.example
-```
-
-## Production Deployment
-
-### Recommmended Architecture
-```markdown
-┌─────────────────────────────────────────┐
-│            Cloudflare Workers           │
-│     ┌─────────────┐ ┌─────────────┐     │
-│     │  Main Site  │ │  Admin API  │     │
-│     │ .domain.com │ │   /api/     │     │
-│     └─────────────┘ └─────────────┘     │
-└─────────────────────────────────────────┘
-                   │ │
-                   │ │
-┌───────────▼────────────────▼────────────┐
-│          Tailscale Network              │
-│           (Secure Inbound)              │
-└─────────────────────────────────────────┘
-                    │
-┌───────────────────▼─────────────────────┐
-│              Proxy Server               │
-│    ┌─────────┐ ┌─────────┐ ┌─────────┐  │
-│    │   Blog  │ │  Email  │ │  Fed.   │  │
-│    │   API   │ │  API    │ │  API    │  │
-│    └─────────┘ └─────────┘ └─────────┘  │
-└─────────────────────────────────────────┘
-```
-### Test the integration
-
-```bash
-# Test proxy connection
-curl http://<tailscale-ip>:8080/api/blog/status
-
-# Live deployment
-curl -v https://proxy.<your-domain.tld>/api/blog/status
-
-# With API key if required
-curl -H "X-API-Key: your-key" http://<tailscale-ip>:8080/api/blog/status
-```
-
-## Monitoring
-
-* **Cloudflare Analytics**: Built-in request metrics and error tracking
-* **Tailscale Metrics**: Monitor network connections and manage access securely.
-* **Worker Logs**: Real-time logging via `wrangler tail`
-* **Proxy Metrics**: Connection stats, protocol distribution, error rates
-* **Status Endpoints**: 
-  - `/api/blog/status` - Blog service health
-  - `/api/email/status` - Email service health
-  - `/api/federation/status` - Federation service health
-
-## Roadmap
-v1.0 – v1.0: Initial integrated platform with basic features.
-
-v1.1 – Unified admin dashboard for live control. VPN Gateway.
-
-v1.2 – Built-in metrics + alerting.
-
-v1.3 – Multi-region container orchestration.
-
-v2.0 – Plugin ecosystem for extending both layers.
-
-## License
-MIT License – open for personal and commercial use.
-
-## Detailed Documentation
-[Blog Layer Guide](https://github.com/gnarzilla/blog.deadlight): Installation and configuration of the blog layer.
-
-[Proxy Layer Guide](https://github.com/gnarzilla/proxy.deadlight): Building and deploying the proxy server.
-
-[Library Guide](https://github.com/gnarzilla/lib.deadlight): Utilizing shared resources within Deadlight.
+### EOF
