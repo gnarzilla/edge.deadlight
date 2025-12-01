@@ -1,0 +1,20 @@
+# deadlight-core/shared/config.yaml
+deadlight:
+  database:
+    type: "d1"
+    name: "blog_content"
+  
+  auth:
+    jwt_expiry: 86400
+    password_iterations: 100000
+  
+  logging:
+    level: "info"
+    request_logging: true
+    mail_logging: true
+  
+  mail:
+    enabled: false
+    domain: "your-domain.com"
+    encryption: true
+    max_message_size: 26214400

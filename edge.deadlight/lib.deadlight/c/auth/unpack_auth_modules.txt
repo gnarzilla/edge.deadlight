@@ -1,0 +1,224 @@
+// deadlight-lib/c/auth/jwt.h
+#ifndef DEADLIGHT_JWT_H
+#define DEADLIGHT_JWT_H
+
+#include <stdint.h>
+#include <stdlib.h>
+
+// JWT token structure
+typedef struct {
+    char* header;
+    char* payload;
+    char* signature;
+    char* raw_token;
+} jwt_token_t;
+
+// JWT payload structure
+typedef struct {
+    uint64_t user_id;
+    char* username;
+    char* role;
+    uint64_t exp;
+    uint64_t iat;
+    uint64_t nbf;
+    char* iss;
+    char* aud;
+} jwt_payload_t;
+
+// Error codes
+typedef enum {
+    JWT_SUCCESS = 0,
+    JWT_ERROR_INVALID_FORMAT = -1,
+    JWT_ERROR_INVALID_SIGNATURE = -2,
+    JWT_ERROR_EXPIRED = -3,
+    JWT_ERROR_NOT_BEFORE = -4,
+    JWT_ERROR_INVALID_ISSUER = -5,
+    JWT_ERROR_INVALID_AUDIENCE = -6,
+    JWT_ERROR_MEMORY = -7,
+    JWT_ERROR_CRYPTO = -8
+} jwt_error_t;
+
+// Configuration structure
+typedef struct {
+    char* secret;
+    uint32_t secret_len;
+    uint64_t default_expiry;
+    char* issuer;
+    char* audience;
+} jwt_config_t;
+
+// Core JWT functions
+jwt_error_t jwt_create(const jwt_payload_t* payload, const jwt_config_t* config, char** token);
+jwt_error_t jwt_verify(const char* token, const jwt_config_t* config, jwt_payload_t** payload);
+void jwt_payload_free(jwt_payload_t* payload);
+void jwt_token_free(jwt_token_t* token);
+
+// Utility functions
+jwt_error_t jwt_parse_token(const char* token, jwt_token_t** parsed);
+jwt_error_t jwt_validate_timing(const jwt_payload_t* payload);
+jwt_error_t jwt_validate_claims(const jwt_payload_t* payload, const jwt_config_t* config);
+
+#endif // DEADLIGHT_JWT_H
+
+// deadlight-lib/c/auth/password.h
+#ifndef DEADLIGHT_PASSWORD_H
+#define DEADLIGHT_PASSWORD_H
+
+#include <stdint.h>
+#include <stdlib.h>
+
+// Password hash structure
+typedef struct {
+    char* hash;
+    char* salt;
+    uint32_t iterations;
+    char* algorithm;
+} password_hash_t;
+
+// Error codes
+typedef enum {
+    PASSWORD_SUCCESS = 0,
+    PASSWORD_ERROR_MEMORY = -1,
+    PASSWORD_ERROR_CRYPTO = -2,
+    PASSWORD_ERROR_INVALID_PARAMS = -3,
+    PASSWORD_ERROR_VERIFICATION_FAILED = -4
+} password_error_t;
+
+// Configuration
+typedef struct {
+    uint32_t iterations;
+    uint32_t salt_length;
+    uint32_t hash_length;
+    char* algorithm; // "PBKDF2-SHA256"
+} password_config_t;
+
+// Core password functions
+password_error_t password_hash(const char* password, const password_config_t* config, password_hash_t** result);
+password_error_t password_verify(const char* password, const password_hash_t* stored_hash);
+void password_hash_free(password_hash_t* hash);
+
+// Utility functions
+password_error_t password_generate_salt(uint8_t* salt, uint32_t length);
+password_error_t password_derive_key(const char* password, const uint8_t* salt, uint32_t salt_len, 
+                                    uint32_t iterations, uint8_t* output, uint32_t output_len);
+
+#endif // DEADLIGHT_PASSWORD_H
+
+// deadlight-lib/c/auth/auth.h
+#ifndef DEADLIGHT_AUTH_H
+#define DEADLIGHT_AUTH_H
+
+#include "jwt.h"
+#include "password.h"
+#include <stdint.h>
+
+// User structure
+typedef struct {
+    uint64_t id;
+    char* username;
+    char* role;
+    password_hash_t* password_hash;
+    uint64_t created_at;
+    uint64_t last_login;
+    uint8_t is_active;
+} user_t;
+
+// Authentication context
+typedef struct {
+    jwt_config_t* jwt_config;
+    password_config_t* password_config;
+    char* cookie_name;
+    uint32_t session_timeout;
+} auth_context_t;
+
+// Authentication result
+typedef struct {
+    user_t* user;
+    char* token;
+    jwt_error_t error_code;
+} auth_result_t;
+
+// Core auth functions
+auth_result_t* auth_login(const char* username, const char* password, auth_context_t* ctx);
+jwt_error_t auth_verify_token(const char* token, auth_context_t* ctx, user_t** user);
+jwt_error_t auth_check_request(const char* cookie_header, auth_context_t* ctx, user_t** user);
+void auth_logout(const char* token, auth_context_t* ctx);
+
+// User management
+password_error_t auth_create_user(const char* username, const char* password, 
+                                const char* role, auth_context_t* ctx, user_t** user);
+jwt_error_t auth_change_password(user_t* user, const char* old_password, 
+                               const char* new_password, auth_context_t* ctx);
+
+// Cleanup functions
+void user_free(user_t* user);
+void auth_result_free(auth_result_t* result);
+void auth_context_free(auth_context_t* ctx);
+
+#endif // DEADLIGHT_AUTH_H
+
+// deadlight-lib/c/auth/base64url.h
+#ifndef DEADLIGHT_BASE64URL_H
+#define DEADLIGHT_BASE64URL_H
+
+#include <stdint.h>
+#include <stdlib.h>
+
+// Base64URL encoding/decoding for JWT
+typedef enum {
+    BASE64URL_SUCCESS = 0,
+    BASE64URL_ERROR_MEMORY = -1,
+    BASE64URL_ERROR_INVALID_INPUT = -2,
+    BASE64URL_ERROR_BUFFER_TOO_SMALL = -3
+} base64url_error_t;
+
+// Core functions
+base64url_error_t base64url_encode(const uint8_t* input, size_t input_len, char** output);
+base64url_error_t base64url_decode(const char* input, uint8_t** output, size_t* output_len);
+
+// Utility functions
+size_t base64url_encoded_length(size_t input_len);
+size_t base64url_decoded_length(const char* input);
+
+// Memory cleanup
+void base64url_free(void* ptr);
+
+#endif // DEADLIGHT_BASE64URL_H
+
+// deadlight-lib/c/auth/crypto.h
+#ifndef DEADLIGHT_CRYPTO_H
+#define DEADLIGHT_CRYPTO_H
+
+#include <stdint.h>
+#include <stdlib.h>
+
+// Crypto error codes
+typedef enum {
+    CRYPTO_SUCCESS = 0,
+    CRYPTO_ERROR_MEMORY = -1,
+    CRYPTO_ERROR_INVALID_PARAMS = -2,
+    CRYPTO_ERROR_CRYPTO_FAILURE = -3,
+    CRYPTO_ERROR_UNSUPPORTED = -4
+} crypto_error_t;
+
+// HMAC functions (for JWT signing)
+crypto_error_t crypto_hmac_sha256(const uint8_t* key, size_t key_len,
+                                 const uint8_t* data, size_t data_len,
+                                 uint8_t* output); // output must be 32 bytes
+
+// PBKDF2 functions (for password hashing)
+crypto_error_t crypto_pbkdf2_sha256(const char* password, size_t password_len,
+                                   const uint8_t* salt, size_t salt_len,
+                                   uint32_t iterations,
+                                   uint8_t* output, size_t output_len);
+
+// Random generation
+crypto_error_t crypto_random_bytes(uint8_t* buffer, size_t length);
+
+// Constant-time comparison (prevent timing attacks)
+int crypto_constant_time_compare(const uint8_t* a, const uint8_t* b, size_t length);
+
+// Secure memory functions
+void crypto_secure_zero(void* ptr, size_t length);
+
+#endif // DEADLIGHT_CRYPTO_H

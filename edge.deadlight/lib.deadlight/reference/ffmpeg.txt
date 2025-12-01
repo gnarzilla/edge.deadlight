@@ -1,0 +1,9 @@
+# MP4 to GIF via ffmpeg
+
+ffmpeg -i input.mp4 output.gif
+
+ffmpeg -i input.mp4 -vf "fps=10,scale=480:-1:flags=lanczos" -c:v gif output.gif
+
+ffmpeg -i input.mp4 -vf "fps=10,scale=480:-1:flags=lanczos,palettegen" palette.png
+ffmpeg -i input.mp4 -i palette.png -vf "fps=10,scale=480:-1:flags=lanczos,paletteuse" output.gif
+
